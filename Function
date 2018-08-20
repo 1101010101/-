@@ -1,0 +1,161 @@
+#include<iostream>
+#include<stdlib.h>
+using namespace std;
+
+const int MAXLEN = 4;
+
+typedef int stackEntry;
+typedef int queueEntry;
+
+class Stack
+{
+public:
+	void push(stackEntry x);
+	void pop();
+	stackEntry peek();
+	Stack();
+	~Stack();
+private:
+	stackEntry data[MAXLEN];
+	int index;
+	int size;
+};
+
+class Queue
+{
+public:
+	void push(queueEntry x);
+	void pop();
+	queueEntry peek();
+	Queue();
+	~Queue();
+private:
+	queueEntry data[MAXLEN];
+	int size;
+	int start;
+	int end;
+};
+
+int main()
+{
+	Queue a;
+	a.push(10);
+	a.push(20);
+	a.push(30);
+	a.push(40);
+	a.pop();
+	a.push(50);
+	a.pop();
+	cout << a.peek() << endl;
+	a.pop();
+	cout << a.peek() << endl;
+	a.pop();
+	cout << a.peek() << endl;
+	system("pause");
+	return 0;
+}
+
+Stack::Stack()
+{
+	index = 0;
+	size = 0;
+	memset(data, -1, sizeof(data));
+}
+
+Stack::~Stack()
+{
+
+}
+
+void Stack::push(stackEntry x)
+{
+	if (size >= MAXLEN)
+	{
+		cout << "The stack is FULL!" << endl;
+		return;
+	}
+	else
+	{
+		data[index++] = x;
+		++size;
+	}
+}
+
+void Stack::pop()
+{
+	if (size <= 0)
+	{
+		cout << "The stack is EMPTY!" << endl;
+		return;
+	}
+	else
+	{
+		--index;
+		--size;
+	}
+}
+
+stackEntry Stack::peek()
+{
+	if (size <= 0)
+	{
+		cout << "The stack is EMPTY!" << endl;
+		return -0xFFFF;
+	}
+	else
+	{
+		return data[index - 1];
+	}
+}
+
+Queue::Queue()
+{
+	start = end = size = 0;
+}
+
+Queue::~Queue()
+{
+
+}
+
+void Queue::push(queueEntry x)
+{
+	if (size >= MAXLEN)
+	{
+		cout << "The queue is FULL!" << endl;
+		return;
+	}
+	else
+	{
+		data[end] = x;
+		end = (end + 1) >= MAXLEN ? 0 : end + 1;
+		++size;
+	}
+}
+
+void Queue::pop()
+{
+	if (size <= 0)
+	{
+		cout << "The queue is EMPTY!" << endl;
+		return;
+	}
+	else
+	{
+		start = (start + 1) >= MAXLEN ? 0 : start + 1;
+		--size;
+	}
+}
+
+queueEntry Queue::peek()
+{
+	if (size <= 0)
+	{
+		cout << "The queue is EMPTY!" << endl;
+		return -0xFFFF;
+	}
+	else
+	{
+			return data[start];
+	}
+}
